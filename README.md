@@ -14,8 +14,8 @@ This project is a cross-platform desktop application built with [Tauri](https://
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/your-tauri-drizzle-app.git
-cd your-tauri-drizzle-app
+git clone https://github.com/VirajNikam01/tauri-drizzle-sqlite-setup.git
+cd tauri-drizzle-sqlite-setup
 
 # Install dependencies
 npm install
@@ -23,3 +23,4 @@ npm install
 # Install Rust components
 rustup update
 cargo install tauri-cli
+```

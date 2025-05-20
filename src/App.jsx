@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { db, schema, rawQuery } from "./lib/db";
+import { db, schema } from "./lib/db";
 import { eq } from "drizzle-orm";
 import { faker } from "@faker-js/faker";
 import { css } from "@emotion/react";
@@ -121,20 +121,18 @@ const App = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const existingUser = await rawQuery(
-        db
-          .select()
-          .from(schema.users)
-          .where(eq(schema.users.name, "Alice"))
-          .limit(1)
-      );
+      const existingUser = await db
+        .select()
+        .from(schema.users)
+        .where(eq(schema.users.name, "Alice"))
+        .limit(1);
 
       if (existingUser.length === 0) {
         console.log("Inserting new user...");
         await db.insert(schema.users).values({ name: "Alice" });
       }
 
-      const result = await rawQuery(db.select().from(schema.users));
+      const result = await db.select().from(schema.users);
       setData(result);
     } catch (err) {
       console.error("Database error:", err);
@@ -158,7 +156,7 @@ const App = () => {
       }));
 
       await db.insert(schema.users).values(usersToInsert);
-      const result = await rawQuery(db.select().from(schema.users));
+      const result = await db.select().from(schema.users);
       setData(result);
     } catch (err) {
       console.error(`Bulk insert (${count}) error:`, err);
@@ -185,7 +183,7 @@ const App = () => {
     setError(null);
     try {
       await db.delete(schema.users);
-      const result = await rawQuery(db.select().from(schema.users));
+      const result = await db.select().from(schema.users);
       setData(result);
     } catch (err) {
       console.error("Delete all error:", err);
